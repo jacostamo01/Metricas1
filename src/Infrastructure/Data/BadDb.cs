@@ -9,8 +9,8 @@ using System.Data.SqlClient;
 
 public static class BadDb
 {
-    public static string ConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") 
-    ?? "Server=localhost;Database=master;User Id=sa;Password=¡CambiarEnProduccion!;TrustServerCertificate=True";
+    private static string p = "¡SuperSecreto123!"; 
+    public static string ConnectionString = "Server=localhost;Database=master;User Id=sa;TrustServerCertificate=True;Password=" + p;
 
     public static int ExecuteNonQueryUnsafe(string sql)
     {
