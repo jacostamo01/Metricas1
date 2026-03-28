@@ -11,16 +11,16 @@ jobs:
     name: Build and analyze
     runs-on: windows-latest
     env:
-      # Mantiene la compatibilidad con las herramientas más recientes
+      # Forzamos el uso de Node 24 para evitar las advertencias de deprecación
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
     steps:
       - name: Set up JDK 17
-        uses: actions/setup-java@v5 # ACTUALIZADO A V5
+        uses: actions/setup-java@v4 
         with:
           java-version: 17
           distribution: 'zulu'
 
-      - uses: actions/checkout@v5 # ACTUALIZADO A V5
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 
 
