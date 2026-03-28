@@ -1,10 +1,13 @@
 using System;
 
-// BAD: Mixing minimal APIs with Controllers folder just to confuse structure
+//Se mantiene el namespace
 namespace WebApi.Controllers
 {
-    public class OrdersController /* No ControllerBase, no attributes: unused on purpose */ 
+    public class OrdersController 
     {
-        public string DoNothing() => "This controller does nothing. Endpoints are in Program.cs";
+        
+        public const string DefaultMessage = "This controller does nothing. Endpoints are in Program.cs";
+
+        public string DoNothing() => DefaultMessage;
     }
 }
