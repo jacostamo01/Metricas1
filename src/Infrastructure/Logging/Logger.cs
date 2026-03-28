@@ -4,7 +4,8 @@ namespace Infrastructure.Logging;
 
 public static class Logger
 {
-    public static bool Enabled = true;
+  
+    public static bool Enabled { get; set; } = true;
 
     public static void Log(string message)
     {
@@ -14,6 +15,15 @@ public static class Logger
 
     public static void Try(Action a)
     {
-        try { a(); } catch { }
+      
+        try 
+        { 
+            a(); 
+        } 
+        catch (Exception ex) 
+        {
+           
+            Log("Error silenciado en Try: " + ex.Message);
+        }
     }
 }
