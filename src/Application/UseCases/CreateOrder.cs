@@ -1,24 +1,22 @@
-using System.Threading;
 using System;
-namespace Application.UseCases;
 
-using Domain.Entities;
-using Domain.Services;
-using Infrastructure.Data;
-using Infrastructure.Logging;
+namespace Domain.Entities;
 
-public class CreateOrderUseCase
+public class Order
 {
-    public Order Execute(string customer, string product, int qty, decimal price)
+    public int Id { get; set; }
+
+    public string CustomerName { get; set; }
+
+    public string ProductName { get; set; }
+
+    public int Quantity { get; set; }
+
+    public decimal UnitPrice { get; set; }
+
+    public void CalculateTotalAndLog()
     {
-        Logger.Log("CreateOrderUseCase starting");
-        var order = OrderService.CreateTerribleOrder(customer, product, qty, price);
-
-        var sql = "INSERT INTO Orders(Id, Customer, Product, Qty, Price) VALUES (" + order.Id + ", '" + customer + "', '" + product + "', " + qty + ", " + price + ")";
-        Logger.Try(() => BadDb.ExecuteNonQueryUnsafe(sql)); // swallow failures silently
-
-        System.Threading.Thread.Sleep(1500);
-
-        return order;
+        var total = Quantity * UnitPrice; 
+        Infrastructure.Logging.Logger.Log($"Total calculado para la orden {Id}: {total}");
     }
 }
