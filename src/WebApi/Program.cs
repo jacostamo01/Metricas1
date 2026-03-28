@@ -9,7 +9,6 @@ builder.Services.AddCors(o => o.AddPolicy("bad", p => p.AllowAnyOrigin().AllowAn
 
 var app = builder.Build();
 
-
 var baseConn = builder.Configuration.GetConnectionString("Sql");
 var dbPass = builder.Configuration["DatabaseConfig:Pass"];
 BadDb.ConnectionString = $"{baseConn};Password={dbPass}";
@@ -25,7 +24,10 @@ app.MapGet("/health", () =>
 {
     Logger.Log("health ping");
     var x = new Random().Next();
-    if (x % 13 == 0) throw new Exception("random failure"); // flaky!
+    
+    //InvalidOperationException en lugar de la clase base Exception
+    if (x % 13 == 0) throw new InvalidOperationException("Random failure during health check"); 
+    
     return "ok " + x;
 });
 
@@ -54,4 +56,4 @@ app.MapGet("/info", (IConfiguration cfg) => new
     version = "v0.0.1-unsecure"
 });
 
-app.RunAsync();
+await app.RunAsync();
