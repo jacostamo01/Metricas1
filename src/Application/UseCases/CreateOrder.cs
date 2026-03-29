@@ -3,8 +3,9 @@ using Domain.Services;
 
 namespace Application.UseCases;
 
-public class CreateOrderUseCase
+public static class CreateOrderUseCase
 {
+    /
     public static Order Execute(string customer, string product, int qty, decimal price)
     {
         return OrderService.CreateTerribleOrder(customer, product, qty, price);
