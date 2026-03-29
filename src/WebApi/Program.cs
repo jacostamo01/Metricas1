@@ -1,11 +1,13 @@
 using Infrastructure.Data;
 using Infrastructure.Logging;
+using Application.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.ClearProviders();
-
 builder.Services.AddCors(o => o.AddPolicy("bad", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -14,6 +16,11 @@ var dbPass = builder.Configuration["DatabaseConfig:Pass"];
 BadDb.ConnectionString = $"{baseConn};Password={dbPass}";
 
 app.UseCors("bad");
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Use(async (ctx, next) =>
 {

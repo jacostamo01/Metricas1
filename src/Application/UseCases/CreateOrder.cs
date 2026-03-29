@@ -1,22 +1,12 @@
-using System;
+using Domain.Entities;
+using Domain.Services;
 
-namespace Domain.Entities;
+namespace Application.UseCases;
 
-public class Order
+public class CreateOrderUseCase
 {
-    public int Id { get; set; }
-
-    public string CustomerName { get; set; }
-
-    public string ProductName { get; set; }
-
-    public int Quantity { get; set; }
-
-    public decimal UnitPrice { get; set; }
-
-    public void CalculateTotalAndLog()
+    public Order Execute(string customer, string product, int qty, decimal price)
     {
-        var total = Quantity * UnitPrice; 
-        Infrastructure.Logging.Logger.Log($"Total calculado para la orden {Id}: {total}");
+        return OrderService.CreateTerribleOrder(customer, product, qty, price);
     }
 }
